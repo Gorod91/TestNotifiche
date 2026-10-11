@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Test Notifiche</title>
+  <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Meta specifici per iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Notifiche">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <h1>🔔 Test Notifiche</h1>
+
+    <section id="install-hint" class="card warn" hidden>
+      <strong>Installa l'app sulla Home</strong>
+      <p>Su iPhone le notifiche web funzionano solo dall'app aggiunta alla schermata Home (iOS 16.4 o successivo):</p>
+      <ol>
+        <li>Tocca il pulsante <b>Condividi</b> in Safari</li>
+        <li>Scegli <b>Aggiungi alla schermata Home</b></li>
+        <li>Apri l'app <b>Notifiche</b> dalla Home</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Stato</h2>
+      <ul class="status">
+        <li>Modalità app installata: <span id="st-standalone">–</span></li>
+        <li>Service worker: <span id="st-sw">–</span></li>
+        <li>Supporto push: <span id="st-push">–</span></li>
+        <li>Permesso: <span id="st-perm">–</span></li>
+        <li>Iscritto ai push: <span id="st-sub">–</span></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>1. Attiva</h2>
+      <button id="btn-enable">Attiva notifiche</button>
+      <button id="btn-disable" class="secondary" hidden>Disattiva</button>
+    </section>
+
+    <section class="card">
+      <h2>2. Prova</h2>
+      <label>Titolo <input id="in-title" value="Ciao! 👋"></label>
+      <label>Messaggio <input id="in-body" value="Questa è una notifica di prova"></label>
+      <button id="btn-local">Notifica locale (subito)</button>
+      <button id="btn-push">Push dal server (subito)</button>
+      <button id="btn-push-delay">Push dal server tra 10 s</button>
+      <p class="hint">Con "tra 10 s" puoi chiudere l'app o bloccare il telefono e vedere arrivare la notifica.</p>
+    </section>
+
+    <pre id="log"></pre>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

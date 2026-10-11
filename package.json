@@ -1,0 +1,15 @@
+{
+  "name": "test-notifiche",
+  "version": "1.0.0",
+  "description": "Web app (PWA) di prova per inviare notifiche push a iPhone",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "web-push": "^3.6.7"
+  }
+}

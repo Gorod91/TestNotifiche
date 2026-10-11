@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: test-notifiche
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: VAPID_SUBJECT
+        value: mailto:test@example.com
