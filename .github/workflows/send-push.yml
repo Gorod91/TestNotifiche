@@ -1,0 +1,31 @@
+name: Invia notifica push
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: Titolo
+        default: Ciao! 👋
+      body:
+        description: Messaggio
+        default: Notifica inviata da GitHub Actions
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/send-push.js
+        env:
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          PUSH_SUBSCRIPTION: ${{ secrets.PUSH_SUBSCRIPTION }}
+          TITLE: ${{ inputs.title }}
+          BODY: ${{ inputs.body }}

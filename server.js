@@ -98,7 +98,7 @@ const server = http.createServer(async (req, res) => {
 
     if (req.method === 'POST' && url.pathname === '/api/send') {
       const { title, body, delay } = await readBody(req);
-      const payload = { title: title || 'Test notifica', body: body || 'Ciao dal server! 👋', url: '/' };
+      const payload = { title: title || 'Test notifica', body: body || 'Ciao dal server! 👋' };
       const seconds = Math.min(Math.max(Number(delay) || 0, 0), 60);
       if (seconds > 0) {
         // Utile per testare con l'app chiusa o il telefono bloccato.

@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Test Notifiche</title>
   <meta name="theme-color" content="#0f172a">
-  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="manifest" href="manifest.webmanifest">
   <!-- Meta specifici per iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Notifiche">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
@@ -49,13 +49,23 @@
       <label>Titolo <input id="in-title" value="Ciao! 👋"></label>
       <label>Messaggio <input id="in-body" value="Questa è una notifica di prova"></label>
       <button id="btn-local">Notifica locale (subito)</button>
-      <button id="btn-push">Push dal server (subito)</button>
-      <button id="btn-push-delay">Push dal server tra 10 s</button>
-      <p class="hint">Con "tra 10 s" puoi chiudere l'app o bloccare il telefono e vedere arrivare la notifica.</p>
+      <div id="server-tools">
+        <button id="btn-push">Push dal server (subito)</button>
+        <button id="btn-push-delay">Push dal server tra 10 s</button>
+        <p class="hint">Con "tra 10 s" puoi chiudere l'app o bloccare il telefono e vedere arrivare la notifica.</p>
+      </div>
+    </section>
+
+    <section id="static-tools" class="card" hidden>
+      <h2>3. Push da GitHub</h2>
+      <p class="hint">Senza server, i push li invia una GitHub Action. Copia questa sottoscrizione e incollala nel secret <b>PUSH_SUBSCRIPTION</b> del repository, poi avvia l'Action <b>Invia notifica push</b>.</p>
+      <textarea id="sub-json" readonly rows="6" placeholder="Attiva prima le notifiche"></textarea>
+      <button id="btn-copy">Copia sottoscrizione</button>
     </section>
 
     <pre id="log"></pre>
   </main>
-  <script src="/app.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

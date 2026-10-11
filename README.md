@@ -5,13 +5,30 @@ Web app di prova (PWA) che invia **notifiche push a iPhone**.
 ## Come funziona
 
 - `public/` — la web app: pagina, `manifest.webmanifest`, service worker `sw.js` che riceve i push e mostra le notifiche.
-- `server.js` — piccolo server Node che serve la app e invia i push con il protocollo Web Push (chiavi VAPID, libreria `web-push`). Le chiavi vengono generate al primo avvio in `vapid.json`, le iscrizioni salvate in `subscriptions.json`.
+- `scripts/send-push.js` + `.github/workflows/` — pubblicazione su GitHub Pages e invio dei push da GitHub Actions, senza server.
+- `server.js` — (opzionale) piccolo server Node che serve la app e invia i push con il protocollo Web Push (chiavi VAPID, libreria `web-push`). Le chiavi vengono generate al primo avvio in `vapid.json`, le iscrizioni salvate in `subscriptions.json`.
 
 ## Requisiti iPhone
 
 - **iOS / iPadOS 16.4 o successivo**
 - La app va aperta in **Safari** e **aggiunta alla schermata Home**: le notifiche non funzionano dentro Safari, solo dall'app installata.
 - Il sito deve essere servito in **HTTPS** (un indirizzo `http://192.168...` della rete locale non basta).
+
+## Pubblicazione su GitHub Pages (senza server)
+
+La web app è statica, quindi può stare su GitHub Pages. In questo caso i push non partono da `server.js` ma da una GitHub Action.
+
+**Una volta sola:**
+
+1. **Attiva Pages:** *Settings → Pages → Build and deployment → Source: **GitHub Actions***. Poi in *Actions* rilancia **Pubblica su GitHub Pages** (o fai un push). L'indirizzo sarà `https://<utente>.github.io/TestNotifiche/`.
+2. **Chiave privata:** *Settings → Secrets and variables → Actions → New repository secret*, nome `VAPID_PRIVATE_KEY`, valore = la chiave privata che corrisponde alla chiave pubblica in `public/config.js`.
+   Per usare una coppia di chiavi tua: `npx web-push generate-vapid-keys`, metti la pubblica in `public/config.js` e la privata nel secret.
+3. **Sull'iPhone:** apri l'indirizzo in Safari → *Condividi → Aggiungi alla schermata Home* → apri l'app → **Attiva notifiche** → **Copia sottoscrizione**.
+4. Crea un altro secret `PUSH_SUBSCRIPTION` e incolla la sottoscrizione copiata. Per più dispositivi incolla un array JSON: `[{...}, {...}]`.
+
+**Per inviare una notifica:** *Actions → Invia notifica push → Run workflow*, scrivi titolo e messaggio e avvia. Funziona anche dall'app GitHub sul telefono, che puoi bloccare mentre aspetti.
+
+> Se riattivi le notifiche (o reinstalli l'app) la sottoscrizione cambia: copiala di nuovo nel secret.
 
 ## Avvio locale
 
@@ -29,7 +46,7 @@ npx cloudflared tunnel --url http://localhost:3000
 
 e apri sull'iPhone l'indirizzo `https://...` che viene stampato.
 
-## Deploy online (alternativa)
+## Deploy con server (alternativa)
 
 Il repo include `render.yaml`: su [Render](https://render.com) → *New* → *Blueprint* → seleziona questo repository. Otterrai un indirizzo HTTPS pubblico.
 
